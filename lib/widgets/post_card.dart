@@ -30,7 +30,6 @@ class _PostCardState extends State<PostCard> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getComments();
   }
@@ -136,8 +135,8 @@ class _PostCardState extends State<PostCard> {
           //image section
           GestureDetector(
             onDoubleTap: () async {
-              await FirestoreMethods().likePost(
-                  widget.snap['postId'], user.uid, widget.snap['likes']);
+              await FirestoreMethods().likePost(widget.snap['postId'], user.uid,
+                  widget.snap['likes'], user.username, user.photoUrl);
               setState(() {
                 isLikeAnimating = true;
               });
@@ -187,13 +186,13 @@ class _PostCardState extends State<PostCard> {
                 child: IconButton(
                   onPressed: () async {
                     await FirestoreMethods().likePost(
-                      widget.snap['postId'],
-                      user.uid,
-                      widget.snap['likes'],
-                    );
+                        widget.snap['postId'],
+                        user.uid,
+                        widget.snap['likes'],
+                        user.username,
+                        user.photoUrl);
                     setState(() {
-                      isLikeAnimating:
-                      true;
+                      isLikeAnimating = true;
                     });
                   },
                   icon: widget.snap['likes'].contains(user.uid)

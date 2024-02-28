@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/resources/firestore_methods.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
 import 'package:provider/provider.dart';
-
 import '../model/user.dart';
 import '../providers/user_provider.dart';
 import '../widgets/comment_card.dart';
@@ -24,7 +22,6 @@ class _CommentScreenState extends State<CommentScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _commentController.dispose();
   }
@@ -53,7 +50,8 @@ class _CommentScreenState extends State<CommentScreen> {
           }
           return ListView.builder(
             itemCount: (snapshot.data! as dynamic).docs.length,
-            itemBuilder: (context, index) => CommentCard(snap : (snapshot.data! as dynamic).docs[index].data()),
+            itemBuilder: (context, index) => CommentCard(
+                snap: (snapshot.data! as dynamic).docs[index].data()),
           );
         },
       ),

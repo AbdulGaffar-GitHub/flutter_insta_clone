@@ -60,7 +60,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
             children: [
               const Divider(),
               SimpleDialogOption(
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                 child: const Text("take a photo"),
                 onPressed: () async {
                   Navigator.of(context).pop();
@@ -72,7 +73,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
               ),
               const Divider(),
               SimpleDialogOption(
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                 child: const Text("Choose from gallery"),
                 onPressed: () async {
                   Navigator.of(context).pop();
@@ -84,7 +86,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
               ),
               const Divider(),
               SimpleDialogOption(
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                 child: const Text("cancel"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -95,7 +98,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         });
   }
 
-  void clearImage(){
+  void clearImage() {
     setState(() {
       _file = null;
     });
@@ -103,7 +106,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _descriptionController.dispose();
   }
@@ -131,8 +133,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 TextButton(
                     onPressed: () => postImage(
                           user!.uid,
-                          user!.username,
-                          user!.photoUrl,
+                          user.username,
+                          user.photoUrl,
                         ),
                     child: const Text(
                       "post",

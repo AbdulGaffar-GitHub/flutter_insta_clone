@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-
-import '../model/user.dart';
-import '../providers/user_provider.dart';
 
 class CommentCard extends StatefulWidget {
   final snap;
@@ -42,7 +38,7 @@ class _CommentCardState extends State<CommentCard> {
                         ),
                       ),
                       TextSpan(
-                        text:'  ${widget.snap['text']}',
+                        text: '  ${widget.snap['text']}',
                         style: const TextStyle(
                           fontWeight: FontWeight.normal,
                         ),
@@ -50,10 +46,12 @@ class _CommentCardState extends State<CommentCard> {
                     ]),
                   ),
                   Padding(
-                    padding:const EdgeInsets.only(top: 4),
+                    padding: const EdgeInsets.only(top: 4),
                     child: Text(
-                      DateFormat.yMMMd().format(widget.snap['datePublished'].toDate()),
-                      style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
+                      DateFormat.yMMMd()
+                          .format(widget.snap['datePublished'].toDate()),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w400, fontSize: 12),
                     ),
                   ),
                 ],
@@ -61,8 +59,11 @@ class _CommentCardState extends State<CommentCard> {
             ),
           ),
           Container(
-            padding:const EdgeInsets.all(8.0),
-            child:const Icon(Icons.favorite,size: 16,),
+            padding: const EdgeInsets.all(8.0),
+            child: const Icon(
+              Icons.favorite,
+              size: 16,
+            ),
           )
         ],
       ),
