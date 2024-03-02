@@ -112,7 +112,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final User? user = Provider.of<UserProvider>(context).getUser;
+    final User? user =
+        Provider.of<UserProvider>(context, listen: false).getUser;
     return _file == null
         ? Center(
             child: IconButton(

@@ -230,4 +230,24 @@ class FirestoreMethods {
       print(e.toString());
     }
   }
+
+  Future<String> editProfile(
+      String uid, Uint8List profilePic, String email, String bio) async {
+    String res = '';
+    try {
+      String photoUrl = await StorageMethods()
+          .uploadImageToStorage("profilePics", profilePic, false);
+      await _firestore.collection("users").doc(uid).update({
+        'photoUrl': photoUrl,
+        'email': email,
+        'bio': bio,
+      });
+      res = 'success';
+    } catch (e) {
+      res = e.toString();
+      return e.toString();
+    }
+
+    return res;
+  }
 }

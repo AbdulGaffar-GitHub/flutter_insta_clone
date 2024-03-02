@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:instagram_clone/screens/posts_screen.dart';
 import 'package:instagram_clone/screens/profile_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/global_variables.dart';
@@ -18,7 +19,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _searchController.dispose();
   }
@@ -88,10 +88,23 @@ class _SearchScreenState extends State<SearchScreen> {
                   return StaggeredGridView.countBuilder(
                     crossAxisCount: 3,
                     itemCount: (snapshot.data! as dynamic).docs.length,
-                    itemBuilder: (context, index) => Image.network(
-                      (snapshot.data! as dynamic).docs[index]['postUrl'],
-                      fit: BoxFit.cover,
-                    ),
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => PostsScreen(
+                                    postId: (snapshot.data! as dynamic)
+                                        .docs[index]['postId'],
+                                    title: "Explore")),
+                          );
+                        },
+                        child: Image.network(
+                          (snapshot.data! as dynamic).docs[index]['postUrl'],
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    },
                     staggeredTileBuilder: (index) =>
                         MediaQuery.of(context).size.width > webScreenSize
                             ? StaggeredTile.count(

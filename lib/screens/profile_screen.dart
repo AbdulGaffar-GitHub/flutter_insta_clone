@@ -3,10 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/resources/firestore_methods.dart';
+import 'package:instagram_clone/screens/edit_profile_screen.dart';
 import 'package:instagram_clone/screens/login_screen.dart';
+import 'package:instagram_clone/screens/posts_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
-
 import '../widgets/follow_button.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -62,6 +63,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
+  logOut() async {
+    await AuthMethods().signOut();
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return isLoading
@@ -73,6 +81,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
               backgroundColor: mobileBackgroundColor,
               title: Text(userData['username']),
               centerTitle: false,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                            child: ListView(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 16.0),
+                              shrinkWrap: true,
+                              children: [
+                                'Log out',
+                              ]
+                                  .map((e) => InkWell(
+                                        onTap: logOut,
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 16,
+                                            vertical: 12,
+                                          ),
+                                          child: Text(e),
+                                        ),
+                                      ))
+                                  .toList(),
+                            ),
+                          );
+                        });
+                  },
+                  icon: Icon(Icons.more_vert),
+                )
+              ],
             ),
             body: ListView(
               children: [
@@ -108,17 +148,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     FirebaseAuth.instance.currentUser!.uid ==
                                             widget.uid
                                         ? FollowButton(
-                                            text: 'Log out',
+                                            text: 'Edit Profile',
                                             backgroundColor:
                                                 mobileBackgroundColor,
                                             textColor: primaryColor,
                                             borderColor: Colors.grey,
-                                            function: () async {
-                                              await AuthMethods().signOut();
+                                            function: () {
                                               Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const LoginScreen()),
+                                                        const EditProfile()),
                                               );
                                             },
                                           )
@@ -214,9 +253,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           DocumentSnapshot snap =
                               (snapshot.data! as dynamic).docs[index];
                           return Container(
-                            child: Image(
-                              image: NetworkImage(snap['postUrl']),
-                              fit: BoxFit.cover,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => PostsScreen(
+                                      title: "posts",
+                                      postId: snap['postId'],
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Image(
+                                image: NetworkImage(snap['postUrl']),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           );
                         },

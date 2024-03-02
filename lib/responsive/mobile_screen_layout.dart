@@ -4,7 +4,8 @@ import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/global_variables.dart';
 
 class MobileScreenLayout extends StatefulWidget {
-  const MobileScreenLayout({super.key});
+  final page;
+  const MobileScreenLayout({super.key, this.page});
 
   @override
   State<MobileScreenLayout> createState() => _MobileScreenLayoutState();
@@ -28,6 +29,9 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
   void initState() {
     super.initState();
     pageController = PageController();
+    if (widget.page != null) {
+      _page = widget.page;
+    }
   }
 
   @override

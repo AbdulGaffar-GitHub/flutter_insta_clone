@@ -16,7 +16,8 @@ class NotificationsScreen extends StatefulWidget {
 class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
-    final User user = Provider.of<UserProvider>(context).getUser!;
+    final User user =
+        Provider.of<UserProvider>(context, listen: false).getUser!;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,

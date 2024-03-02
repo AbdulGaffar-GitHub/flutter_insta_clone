@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/screens/profile_screen.dart';
 import 'package:instagram_clone/utils/constants.dart';
 
 class NotificationCard extends StatefulWidget {
@@ -61,9 +62,19 @@ class _NotificationCardState extends State<NotificationCard> {
       ),
       child: Row(
         children: [
-          CircleAvatar(
-            backgroundImage: NetworkImage(widget.snap['photoUrl']),
-            radius: 20,
+          InkWell(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) =>
+                      ProfileScreen(uid: widget.snap['actionUid']),
+                ),
+              );
+            },
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(widget.snap['photoUrl']),
+              radius: 20,
+            ),
           ),
           SizedBox(
             width: 10,
@@ -73,32 +84,37 @@ class _NotificationCardState extends State<NotificationCard> {
               children: [
                 TextSpan(
                   text: widget.snap['username'],
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
                 TextSpan(
                   text: "  ${widget.snap['content']} \n",
                   style: TextStyle(fontWeight: FontWeight.normal),
                 ),
-                if (widget.snap['type'] != FOLLOW)
-                  widget.snap['type'] == COMMENT
-                      ? TextSpan(
-                          text: " ${widget.snap['comment']}  ",
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              color: Colors.grey),
-                        )
-                      : TextSpan(
-                          text: " \"${widget.snap['postBio']}\" ",
-                          style: TextStyle(fontWeight: FontWeight.normal),
-                        ),
+                if (widget.snap['type'] != FOLLOW) ...[
+                  if (widget.snap['type'] == COMMENT)
+                    TextSpan(
+                      text: " ${widget.snap['comment']}  ",
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        color: Colors.grey,
+                      ),
+                    )
+                  else
+                    TextSpan(
+                      text: " \"${widget.snap['postBio']}\" ",
+                      style: TextStyle(fontWeight: FontWeight.normal),
+                    ),
+                ],
                 TextSpan(
                   text: " $duration",
                   style: TextStyle(fontWeight: FontWeight.w200),
-                )
+                ),
               ],
             ),
-            softWrap: true,
-          ),
+          )
         ],
       ),
     );
